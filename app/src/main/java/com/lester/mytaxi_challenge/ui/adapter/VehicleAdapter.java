@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VehiculoAdapter extends RecyclerView.Adapter<VehiculoAdapter.ViewHolder> {
+public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHolder> {
     private Context ctx;
     private Callback callback;
     private ArrayList<VehicleE> data;
 
-    public VehiculoAdapter(Context _ctx, ArrayList<VehicleE> data, Callback callback) {
+    public VehicleAdapter(Context _ctx, ArrayList<VehicleE> data, Callback callback) {
         ctx = _ctx;
         this.data = data;
         this.callback = callback;

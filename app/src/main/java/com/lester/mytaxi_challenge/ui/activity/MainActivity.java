@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,12 +30,11 @@ import com.lester.mytaxi_challenge.repository.VehicleRepository;
 import com.lester.mytaxi_challenge.repository.datasource.remote.VehicleRest;
 import com.lester.mytaxi_challenge.repository.datasource.remote.retrofit.ApiService;
 import com.lester.mytaxi_challenge.repository.model.VehicleE;
-import com.lester.mytaxi_challenge.ui.adapter.VehiculoAdapter;
+import com.lester.mytaxi_challenge.ui.adapter.VehicleAdapter;
 import com.lester.mytaxi_challenge.viewmodel.VehicleViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @BindView(R.id.btn_num_vehicles) Button btn_num_vehicles;
 
     private VehicleViewModel vehicleViewModel;
-    private VehiculoAdapter vehiculoAdapter;
+    private VehicleAdapter vehicleAdapter;
     private ArrayList<VehicleE> dataList = new ArrayList<>();
 
     GoogleMap mMap;
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 ContextCompat.getColor(this, android.R.color.holo_blue_bright));
         pullToRefreshItems.setEnabled(false);
 
-        vehiculoAdapter = new VehiculoAdapter(this, dataList, position -> {
+        vehicleAdapter = new VehicleAdapter(this, dataList, position -> {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             VehicleE vehicle = dataList.get(position);
             LatLng ll = new LatLng(vehicle.getCoordinate().getLatitude(), vehicle.getCoordinate().getLongitude());
@@ -92,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         rvDataList.setLayoutManager(new LinearLayoutManager(this));
         rvDataList.setHasFixedSize(true);
-        rvDataList.setAdapter(vehiculoAdapter);
+        rvDataList.setAdapter(vehicleAdapter);
 
         SupportMapFragment map = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.main_map);
         map.getMapAsync(this);
@@ -105,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             if(b){
                 btn_num_vehicles.setText("Loading...");
                 dataList.addAll(new ArrayList<>());
-                vehiculoAdapter.notifyDataSetChanged();
+                vehicleAdapter.notifyDataSetChanged();
                 pullToRefreshItems.setRefreshing(true);
             }else{
                 pullToRefreshItems.setRefreshing(false);
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void updateDataList(ArrayList<VehicleE> vehicleList) {
         this.dataList.clear();
         this.dataList.addAll(vehicleList);
-        vehiculoAdapter.notifyDataSetChanged();
+        vehicleAdapter.notifyDataSetChanged();
 
         if(vehicleList.size() == 0){
             btn_num_vehicles.setText("No cars available");
