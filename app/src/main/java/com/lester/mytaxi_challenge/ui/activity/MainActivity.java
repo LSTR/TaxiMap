@@ -26,12 +26,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.lester.mytaxi_challenge.R;
-import com.lester.mytaxi_challenge.repository.VehicleRepository;
-import com.lester.mytaxi_challenge.repository.datasource.remote.VehicleRest;
-import com.lester.mytaxi_challenge.repository.datasource.remote.retrofit.ApiService;
 import com.lester.mytaxi_challenge.repository.model.VehicleE;
 import com.lester.mytaxi_challenge.ui.adapter.VehicleAdapter;
 import com.lester.mytaxi_challenge.viewmodel.VehicleViewModel;
+import com.lester.mytaxi_challenge.viewmodel.VehicleViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void init() {
-        vehicleViewModel = ViewModelProviders.of(this).get(VehicleViewModel.class);
+        vehicleViewModel = ViewModelProviders.of(this, new VehicleViewModelFactory()).get(VehicleViewModel.class);
         vehicleViewModel.dataListLive.observe(this, vehicleList -> updateDataList(vehicleList));
         vehicleViewModel.showLoadingLive.observe(this, b -> {
             if(b){
@@ -109,8 +107,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 pullToRefreshItems.setRefreshing(false);
             }
         });
-
-        vehicleViewModel.provide(new VehicleRepository(new VehicleRest(new ApiService())));
     }
 
     @OnClick(R.id.btn_num_vehicles)

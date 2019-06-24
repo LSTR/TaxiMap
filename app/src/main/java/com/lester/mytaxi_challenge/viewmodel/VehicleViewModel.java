@@ -3,8 +3,10 @@ package com.lester.mytaxi_challenge.viewmodel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.lester.mytaxi_challenge.repository.VehicleRepository;
 import com.lester.mytaxi_challenge.repository.VehicleRepositoryInt;
 import com.lester.mytaxi_challenge.repository.datasource.remote.VehicleRest;
+import com.lester.mytaxi_challenge.repository.datasource.remote.retrofit.ApiService;
 import com.lester.mytaxi_challenge.repository.model.VehicleE;
 
 import java.util.ArrayList;
@@ -15,8 +17,8 @@ public class VehicleViewModel extends ViewModel {
     public MutableLiveData<String> messageLive = new MutableLiveData<>();
     public MutableLiveData<Boolean> showLoadingLive = new MutableLiveData<>();
 
-    public void provide(VehicleRepositoryInt vehicleRepository){
-        this.vehicleRepository = vehicleRepository;
+    public VehicleViewModel(VehicleRepository vehicleRepositor){
+        this.vehicleRepository = vehicleRepositor; //new VehicleRepository(new VehicleRest(new ApiService()));
     }
 
     public void loadVehicles(double p1Lat, double p1Lon, double p2Lat, double p2Lon){
