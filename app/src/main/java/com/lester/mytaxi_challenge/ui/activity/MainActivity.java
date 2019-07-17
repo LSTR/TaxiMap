@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void setupUI() {
-        toolbar.setTitle("My Taxi");
+        toolbar.setTitle("Taxi Map");
         setSupportActionBar(toolbar);
 
         bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
